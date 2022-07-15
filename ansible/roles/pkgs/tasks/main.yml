@@ -1,0 +1,15 @@
+---
+# tasks file for pkgs
+- include_tasks: update-os.yml
+- include_tasks: docker-and-compose.yml
+
+
+
+# - name: Install Firefox {{ dickhead }}
+  # apt:
+    # name: firefox
+    # state: present
+  
+# Step: Install firefox
+# - name: Putazo {{ system_manager }}
+  # shell: echo "putazo"
