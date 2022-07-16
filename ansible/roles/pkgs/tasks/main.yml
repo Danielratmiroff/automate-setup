@@ -5,3 +5,5 @@
   loop:
     - git.yml
     - direnv.yml
+    - fd-find.yml
+    - gzip.yml

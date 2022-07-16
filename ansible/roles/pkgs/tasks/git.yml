@@ -1,3 +1,4 @@
+---
 - name: Install git
   apt:
     name: git
