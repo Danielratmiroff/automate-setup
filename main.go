@@ -1,7 +1,7 @@
 package main
 
 import (
-	"automate-setup/executor"
+	"automate-setup/execute"
 	"fmt"
 	"io"
 
@@ -22,7 +22,7 @@ func main() {
 
 	// start := hasAnsible(os.Stdin, os.Stdout)
 	// if start {
-	executor.Exec("pkgs-playbook.yml")
+	execute.Exec("main-playbook.yml")
 	// }
 }
 

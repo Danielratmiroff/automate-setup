@@ -1,21 +1,6 @@
 ---
 # defaults file for pkgs
-dickhead: hello@puto.com
-# TODO: make this user name dymamic -> should come from GO app
-admin_user: daniel
+asshole: wholeass
 
-# Docker variables
-docker_required_packages:
-  - "apt-transport-https"
-  - "ca-certificates"
-  - "curl"
-  - "gnupg-agent"
-  - "software-properties-common"
-  - "python3-setuptools"
-docker_gpg_url: https://download.docker.com/linux/ubuntu/gpg
-docker_repo: deb [trusted=yes] https://download.docker.com/linux/ubuntu focal stable
-docker_packges:
-  - "docker-ce"
-  - "docker-ce-cli"
-  - "containerd.io"
-docker_compose_url: https://github.com/docker/compose/releases/download/v2.6.1/docker-compose-linux-x86_64
+# Direnv pkg
+direnv_url: https://github.com/direnv/direnv/releases/download/v2.32.1/direnv.linux-amd64

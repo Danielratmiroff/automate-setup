@@ -1,0 +1,8 @@
+---
+- name: Install fd-find
+  apt:
+    name: fd-find
+    state: latest 
+
+- name: Create link to fd-find 
+  shell: ln -s $(which fdfind) "{{ localbin }}"/fd

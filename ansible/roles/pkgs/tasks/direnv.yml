@@ -1,0 +1,11 @@
+---
+- name: Install direnv
+  get_url:
+    url: "{{ direnv_url }}"
+    dest: /usr/local/bin/direnv
+    mode: 0755
+
+- name: Set direnv zshrc
+  lineinfile:
+    dest: ~/.zshrc
+    line: 'eval "$(direnv hook zsh)"'

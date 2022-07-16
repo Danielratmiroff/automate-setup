@@ -1,0 +1,20 @@
+---
+- name: System setup
+  hosts: all
+  become: yes
+  vars:
+    localbin: ~/.local/bin
+  pre_tasks:
+    - name: Updating your butthole
+      shell: |
+        apt-get -y clean
+        apt-get update
+        apt-get -y upgrade
+        apt-get -y autoremove
+        apt-get -y autoclean
+  roles: 
+    - role: pkgs
+    - role: docker
+# TODO: make this user name dymamic -> should come from GO app
+      admin_user: daniel
+      

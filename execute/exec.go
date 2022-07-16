@@ -1,4 +1,4 @@
-package executor
+package execute
 
 import (
 	"bytes"
@@ -15,6 +15,7 @@ func Exec(command string) {
 	hosts := fmt.Sprintf("%v/hosts.ini", ansible)
 	playbook := fmt.Sprintf("%v/%v", ansible, command)
 
+	// TODO: this could be a string "ansible-.. -key... hosts" that gets splitted with commas
 	cmd := exec.Command("ansible-playbook", "-Ki", hosts, playbook)
 	// cmd := exec.Command("ansible-playbook", "-i", ansibleHost, filepath, "--syntax-check" )
 
