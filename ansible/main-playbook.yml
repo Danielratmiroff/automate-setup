@@ -8,7 +8,7 @@
     user_bin_dir: /usr/bin
     home_dir: home/"{{ admin_user }}"
     downloads_dir: ~/downloads
-    softwares_dir: ~/softwares
+    software_dir: ~/software
     zshrc_dir: ~/.zshrc
 
 
@@ -24,6 +24,12 @@
         apt-get -y upgrade
         apt-get -y autoremove
         apt-get -y autoclean
+
+    - name: Create software folder
+      file:
+      path: "{{ software_dir }}"
+      state: directory
+
     - name: Create downloads folder
       file:
       path: "{{ downloads_dir }}"
@@ -35,4 +41,5 @@
     - role: zshrc
     - role: pandoc
     - role: tmux
+    - role: neovim
       

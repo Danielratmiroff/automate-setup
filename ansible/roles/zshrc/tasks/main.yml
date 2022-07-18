@@ -7,3 +7,4 @@
     - dotfile.yml
     - validate.yml
     - go-aliases.yml
+    - autosuggestion.yml
