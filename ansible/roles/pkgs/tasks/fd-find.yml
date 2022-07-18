@@ -1,8 +1,14 @@
 ---
+- name: Install findutils
+  package:
+    name: findutils
+    state: latest
+
 - name: Install fd-find
-  apt:
+  package:
     name: fd-find
     state: latest 
 
 - name: Create link to fd-find 
   shell: ln -s $(which fdfind) "{{ localbin }}"/fd
+

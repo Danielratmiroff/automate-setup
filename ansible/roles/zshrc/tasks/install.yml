@@ -1,0 +1,17 @@
+---
+# tasks for zshrc
+- name: Clone Oh My ZSH repo for user.
+  git:
+    repo: "{{ oh_my_zsh_git_repository }}"
+    dest: "{{ home_dir }}"
+    update: true
+    accept_hostkey: true
+    version: "master"
+  register: oh_my_zsh_clone
+
+- name: Set ownership on newly cloned repository.
+  file:
+    path: "{{ home_dir }}"
+    owner: "{{ admin_user }}"
+    recurse: true
+  when: oh_my_zsh_clone is changed

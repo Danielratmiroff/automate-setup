@@ -1,0 +1,10 @@
+---
+# TODO: fetch dotfiles from git
+#- name: Template .zshrc into place if required.
+#  template:
+#    src: "{{ oh_my_zsh_zshrc_template }}"
+#    dest: "{{ zsh_user_zshrc_path }}"
+#    owner: "{{ zsh_user.name }}"
+#    group: "{{ zsh_user.group }}"
+#    backup: "{{ oh_my_zsh_zshrc_backup }}"
+

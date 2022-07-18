@@ -1,0 +1,5 @@
+---
+# defaults file for zshrc
+oh_my_zsh_git_repository: "https://github.com/robbyrussell/oh-my-zsh.git"
+
+zshrc_path: "/{{ home_dir }}/.zshrc"

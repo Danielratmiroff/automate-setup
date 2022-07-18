@@ -1,0 +1,28 @@
+---
+# Install pandoc if not already installed.
+- name: check if pandoc is installed
+  command: dpkg-query -W pandoc
+  register: installed
+  failed_when: installed.rc > 1
+  changed_when: no
+
+- name: Ensure download location exists
+  set_facts:
+    pandoc_file: pandoc-"{{ pandoc_version }}"-linux-amd64
+    pandoc_url: https://github.com/jgm/pandoc/releases/download/"{{ pandoc_version }}"/"{{ pandoc_file }}"
+  file:
+    path: "{{ ansible_env.HOME }}/downloads/"
+    state: directory
+  when: installed.rc == 1
+
+- name: Download pandoc .deb
+  get_url:
+    url: "{{ pandoc_url }}"
+    dest: "{{ ansible_env.HOME }}/downloads/{{ pandoc_file }}"
+  when: installed.rc == 1 
+
+- name: Install pandoc
+  # TODO: install pandoc ubuntu
+  # package:
+    # name: "{{ ansible_env.HOME }}/downloads/{{ pandoc_file }}"
+  # when: installed.rc == 1

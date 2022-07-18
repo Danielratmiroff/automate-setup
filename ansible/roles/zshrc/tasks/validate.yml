@@ -1,0 +1,17 @@
+---
+- name: Install zsh for Linux.
+  package:
+    name: "zsh"
+    state: present
+    # when: ansible_system == "Linux" and install_zsh - 
+    # TODO: need to pass this from GO
+
+- name: Get zsh installed path.
+  command: "which zsh"
+  register: zsh_installed_path
+  changed_when: false
+
+- name: Set user shell to zsh.
+  user:
+    name: "{{ admin_user }}"
+    shell: "{{ zsh_installed_path.stdout }}"
