@@ -1,0 +1,9 @@
+---
+- name: Installing zshrc's highlighting 
+  git:
+    repo: git clone https://github.com/zsh-users/zsh-syntax-highlighting.git
+    dest: "~/{{ ohmyzshrc }}/plugins/zsh-syntax-highlighting"
+    update: yes
+
+
+    
