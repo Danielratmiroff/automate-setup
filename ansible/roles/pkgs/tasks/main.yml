@@ -7,3 +7,5 @@
     - direnv.yml
     - fd-find.yml
     - gzip.yml
+    - pipenv.yml
+    - progress.yml

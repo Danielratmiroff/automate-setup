@@ -1,0 +1,22 @@
+---
+- name: Adding Neovim to zshrc
+  lineinfile:
+    path: "{{ zshrc_dir }}"
+    line: export PATH=$PATH:$HOME/downloads/"{{ neovim_file }}"/bin
+
+- name: Creating symlinks for neovim
+  block:
+  - name: use nvim for vi
+    alternatives: 
+     name: vi 
+     path: /usr/bin/nvim
+
+  - name: use nvim for vim
+    alternatives: 
+     name: vim
+     path: /usr/bin/nvim
+
+  - name: use nvim for editor
+    alternatives: 
+     name: editor
+     path: /usr/bin/nvim

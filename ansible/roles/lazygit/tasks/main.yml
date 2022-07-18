@@ -1,0 +1,13 @@
+---
+# tasks file for lazygit
+- name: Installing lazygit
+  git:
+    repo: https://github.com/jesseduffield/lazygit.git
+    dest: /"{{ home_dir }}"/downloads
+    environment:
+      GIT_TERMINAL_PROMPT: 0
+
+- name: Insert lazygit alias in zshrc
+  lineinfile:
+    path: "{{ zshrc_dir }}"
+    line: alias lg='lazygit'

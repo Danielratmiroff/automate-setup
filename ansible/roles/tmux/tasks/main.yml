@@ -1,0 +1,8 @@
+---
+# tasks file for tmux
+- name: Install tmux
+  package:
+    name: tmux
+    state: latest 
+
+    # TODO: import dotfiles for tmux

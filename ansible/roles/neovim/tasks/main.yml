@@ -1,0 +1,18 @@
+---
+# tasks file for neovim
+- name: Installing Neo {{ fucking }} Vim
+  get_url:
+    url: "{{ neovim_url }}"
+    dest: "{{ downloads_dir }}"
+
+- name: Unzip neovim  
+  unarchive:
+    src: "{{ downloads_dir }}/{{ compressed_file }}"
+    dest: "{{ software_dir }}"
+
+- name: Other neovim tasks
+  include_tasks: "{{ items }}" 
+  loop: 
+    # TODO: include dotfiles
+    - add-go-zshrc.yml 
+    - create_synlinks.yml

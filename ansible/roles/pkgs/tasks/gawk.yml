@@ -1,0 +1,5 @@
+---
+- name: Install gawk
+  package:
+    name: gawk
+    state: latest 

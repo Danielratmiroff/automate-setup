@@ -4,10 +4,18 @@
   hosts: all
   become: yes
   vars:
-    localbin: ~/.local/bin
+    local_bin: ~/.local/bin
+    user_bin_dir: /usr/bin
+    home_dir: home/"{{ admin_user }}"
+    downloads_dir: ~/downloads
+    softwares_dir: ~/softwares
+    zshrc_dir: ~/.zshrc
+
+
     # TODO: make this user name dymamic -> should come from GO app
     admin_user: daniel
-    home_dir: home/"{{ admin_user }}"
+    fucking: fikiti fukuti fuk
+
   pre_tasks:
     - name: Updating your butthole
       shell: |
@@ -16,9 +24,15 @@
         apt-get -y upgrade
         apt-get -y autoremove
         apt-get -y autoclean
+    - name: Create downloads folder
+      file:
+      path: "{{ downloads_dir }}"
+      state: directory
+
   roles: 
     # - role: pkgs
     # - role: docker
     - role: zshrc
     - role: pandoc
+    - role: tmux
       

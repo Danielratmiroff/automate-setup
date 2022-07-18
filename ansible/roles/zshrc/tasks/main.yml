@@ -5,4 +5,5 @@
   loop:
     - install.yml
     - dotfile.yml
-    - vaildate.yml
+    - validate.yml
+    - go-aliases.yml

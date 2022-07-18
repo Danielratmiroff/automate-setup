@@ -10,5 +10,5 @@
     state: latest 
 
 - name: Create link to fd-find 
-  shell: ln -s $(which fdfind) "{{ localbin }}"/fd
+  shell: ln -s $(which fdfind) "{{ local_bin }}"/fd
 
