@@ -1,0 +1,8 @@
+---
+- name: Converge
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: "Include pandoc"
+      ansible.builtin.include_role:
+        name: "pandoc"

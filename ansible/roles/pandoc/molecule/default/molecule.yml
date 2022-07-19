@@ -1,0 +1,36 @@
+---
+dependency:
+  name: galaxy
+
+driver:
+  name: delegated
+  options:
+    managed: False
+    ansible_connection_options:
+      ansible_connection: local
+
+platforms:
+  - name: instance
+    image: ubuntu:latest
+    pre_build_image: true
+
+test_sequence:
+  # - lint
+  - destroy
+  - dependency
+  - syntax
+  - create
+  - converge
+  - idempotence
+  - verify
+  - destroy
+
+provisioner:
+  name: ansible
+  # log: True
+
+verifier:
+  name: ansible
+
+#lint: |
+#  ansible-lint

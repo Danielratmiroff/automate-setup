@@ -1,9 +1,26 @@
 ---
+- name: Create direnv folder
+  block:
+    - name: Check if folder exists
+      stat:
+        path: "{{ direnv_dir }}"
+      register: stat_result
+
+    - name: test
+      debug:
+        msg: "{{stat_result}}"
+
+    - name: Create the file, if it doesnt exist already
+      file:
+        owner: "daniel"
+        path: "{{ direnv_dir }}"
+        mode: '0644'
+        state: touch
+
 - name: Install direnv
   get_url:
     url: "{{ direnv_url }}"
-    dest: /usr/local/bin/direnv
-    mode: 0755
+    dest: "{{ direnv_dir }}"
 
 - name: Set direnv zshrc
   lineinfile:

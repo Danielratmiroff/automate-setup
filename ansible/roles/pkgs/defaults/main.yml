@@ -2,5 +2,14 @@
 # defaults file for pkgs
 asshole: wholeass
 
+
+local_bin: ~/.local/bin
+user_bin_dir: /usr/bin
+home_dir: home/"{{ admin_user }}"
+downloads_dir: ~/downloads
+software_dir: ~/software
+zshrc_dir: ~/.zshrc
+
 # Direnv pkg
 direnv_url: https://github.com/direnv/direnv/releases/download/v2.32.1/direnv.linux-amd64
+direnv_dir: "{{ user_bin_dir }}/direnv"

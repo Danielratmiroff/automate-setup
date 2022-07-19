@@ -1,0 +1,29 @@
+---
+# tasks file for mongodb
+- name: Install mongodb
+  block:
+    - name: Download little mongo
+      get_url:
+        url: "{{ mongo_server_url }}"
+        dest: "{{ downloads_dir }}"
+
+    - name: Install mongish
+      shell: apt-key add -
+
+
+    - name: Check if little mongish is alright
+      package_facts:
+      manager: "auto"
+      # 
+      # TODO: Install GNUP when previous command fails
+# - name: Is mongito installed?
+#  debug:
+#    msg: "{{ ansible_facts.packages['mongodb'].version | length }}"
+#  register: mongo_version
+#  when: "'mongodb' in ansible_facts.register"
+
+#- name: Try to install mongodb again but using 'gnupg'
+#  package: 
+#    - name: gnupg
+#      state: latest
+#  when: mongo_version == None

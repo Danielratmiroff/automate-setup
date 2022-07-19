@@ -1,5 +1,8 @@
 ---
 # defaults file for pandoc
 pandoc_version: 2.18
-pandoc_file: pandoc-"{{ pandoc_version }}"-linux-amd64.tar.gz
-pandoc_url: https://github.com/jgm/pandoc/releases/download/"{{ pandoc_version }}"/"{{ pandoc_file }}"
+
+pandoc_file: "pandoc-{{ pandoc_version }}-linux-amd64"
+pandoc_file_tar: "{{ pandoc_file }}.tar.gz"
+
+pandoc_url: "https://github.com/jgm/pandoc/releases/download/{{ pandoc_version }}/{{ pandoc_file_tar }}"
