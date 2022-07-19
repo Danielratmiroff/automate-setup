@@ -9,10 +9,10 @@
   unarchive:
     src: "{{ downloads_dir }}/{{ compressed_file }}"
     dest: "{{ software_dir }}"
+    creates: "{{ software_dir }}/neovim"
 
 - name: Other neovim tasks
   include_tasks: "{{ items }}" 
   loop: 
     # TODO: include dotfiles
-    - add-go-zshrc.yml 
-    - create_synlinks.yml
+    - add-to-path.yml 

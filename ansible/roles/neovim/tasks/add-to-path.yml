@@ -9,14 +9,14 @@
   - name: use nvim for vi
     alternatives: 
      name: vi 
-     path: /usr/bin/nvim
+     path: "{{ user_bin_dir }}/nvim"
 
   - name: use nvim for vim
     alternatives: 
      name: vim
-     path: /usr/bin/nvim
+     path: "{{ user_bin_dir }}/nvim"
 
   - name: use nvim for editor
     alternatives: 
      name: editor
-     path: /usr/bin/nvim
+     path: "{{ user_bin_dir }}/nvim"

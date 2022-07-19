@@ -6,10 +6,6 @@
         path: "{{ direnv_dir }}"
       register: stat_result
 
-    - name: test
-      debug:
-        msg: "{{stat_result}}"
-
     - name: Create the file, if it doesnt exist already
       file:
         owner: "daniel"
@@ -24,5 +20,5 @@
 
 - name: Set direnv zshrc
   lineinfile:
-    dest: ~/.zshrc
+    dest: "{{ zshrc_dir }}"
     line: 'eval "$(direnv hook zsh)"'

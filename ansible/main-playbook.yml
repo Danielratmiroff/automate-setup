@@ -6,11 +6,10 @@
   vars:
     local_bin: ~/.local/bin
     user_bin_dir: /usr/bin
-    home_dir: home/"{{ admin_user }}"
+    home_dir: "home/{{ admin_user }}"
     downloads_dir: ~/downloads
     software_dir: ~/software
     zshrc_dir: ~/.zshrc
-
 
     # TODO: make this user name dymamic -> should come from GO app
     admin_user: daniel
@@ -27,19 +26,19 @@
 
     - name: Create software folder
       file:
-      path: "{{ software_dir }}"
-      state: directory
+        path: "{{ software_dir }}"
+        state: directory
 
     - name: Create downloads folder
       file:
-      path: "{{ downloads_dir }}"
-      state: directory
+        path: "{{ downloads_dir }}"
+        state: directory
 
   roles: 
+    # - role: zshrc
     # - role: pkgs
     # - role: docker
-    - role: zshrc
-    - role: pandoc
-    - role: tmux
+    # - role: pandoc
+    # - role: tmux
     - role: neovim
       
