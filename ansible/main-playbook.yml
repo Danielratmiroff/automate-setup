@@ -1,7 +1,8 @@
 ---
 
 - name: System setup
-  hosts: all
+  hosts: localhost
+  connection: local
   become: yes
   vars:
     local_bin: ~/.local/bin
@@ -13,7 +14,9 @@
 
     # TODO: make this user name dymamic -> should come from GO app
     admin_user: daniel
+
     fucking: fikiti fukuti fuk
+    butthole: butthole
 
   pre_tasks:
     - name: Updating your butthole
@@ -36,9 +39,8 @@
 
   roles: 
     # - role: zshrc
-    # - role: pkgs
+    - role: pkgs
     # - role: docker
-    # - role: pandoc
     # - role: tmux
-    - role: neovim
+    # - role: neovim
       

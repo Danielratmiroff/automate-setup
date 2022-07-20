@@ -9,3 +9,6 @@
     - go-aliases.yml
     - autosuggestion.yml
     - highlighting.yml
+    - direnv.yml
+  
+

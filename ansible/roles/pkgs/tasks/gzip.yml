@@ -1,7 +1,0 @@
----
-- name: Install gzip
-  apt:
-    name: gzip
-    state: latest
-    install_recommends: yes
-

@@ -1,5 +1,0 @@
----
-- name: Install Pipenv
-  pip:
-    name: pipenv
-    state: latest 

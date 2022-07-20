@@ -8,17 +8,10 @@
 
     - name: Create the file, if it doesnt exist already
       file:
-        owner: "daniel"
         path: "{{ direnv_dir }}"
-        mode: '0644'
-        state: touch
+        state: directory
 
 - name: Install direnv
   get_url:
     url: "{{ direnv_url }}"
     dest: "{{ direnv_dir }}"
-
-- name: Set direnv zshrc
-  lineinfile:
-    dest: "{{ zshrc_dir }}"
-    line: 'eval "$(direnv hook zsh)"'

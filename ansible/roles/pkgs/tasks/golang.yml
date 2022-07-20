@@ -1,5 +1,0 @@
----
-- name: Install Golang
-  package:
-    name: golang
-    state: latest 

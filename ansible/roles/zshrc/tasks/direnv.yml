@@ -1,0 +1,5 @@
+---
+- name: Set direnv zshrc
+  lineinfile:
+    dest: "{{ zshrc_dir }}"
+    line: 'eval "$(direnv hook zsh)"'
