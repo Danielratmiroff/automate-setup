@@ -25,3 +25,5 @@
     - "curl"
     - "wget"
     - "software-properties-common"
+    - "npm"
+    - "nodejs"

@@ -69,7 +69,6 @@ func hasAnsible(in io.Reader, out io.Writer) bool {
 	if !hasPython {
 		err := exec.Command(python, "--version").Run()
 		if err != nil {
-			// TODO: install python?
 			fmt.Printf("Could not install %v: %v,", python, err)
 			return false
 		}
@@ -78,7 +77,6 @@ func hasAnsible(in io.Reader, out io.Writer) bool {
 	if !hasPip {
 		err := exec.Command(python, "-m", pip, "-V").Run()
 		if err != nil {
-			// TODO: install pip?
 			fmt.Printf("Could not install %v: %v,", pip, err)
 			return false
 		}
