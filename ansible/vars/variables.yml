@@ -5,7 +5,7 @@ user_bin_dir: /usr/bin
 home_dir: "home/{{ admin_user }}"
 downloads_dir: ~/downloads
 software_dir: ~/software
-zshrc_dir: ~/.zshrc
+zshrc_dir: ~/.oh-my-zsh
 
 # User
 # TODO: make this user name dymamic -> should come from GO app

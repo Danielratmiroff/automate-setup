@@ -1,0 +1,11 @@
+---
+# Run Neovim role
+- name: Starting Neovim's tasks
+  hosts: all
+  become: true
+  vars_files: 
+    - vars/variables.yml
+
+  roles: 
+    - neovim
+      

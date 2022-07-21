@@ -1,6 +1,6 @@
 all:
   hosts: 
-    localhost: localhost
+    localhost:
   vars:
     ansible_connection: local
 

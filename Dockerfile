@@ -14,10 +14,10 @@ RUN add-apt-repository universe
 
 RUN apt-get update && apt-get install -y \
   python-is-python3 \
-  python3-pip -y \
-  openssh-client -y \
+  python3-pip \
+  openssh-client \
 # TODO: remove this -- only for dev purposes
-  vim -y
+  vim 
 
 RUN pip install --upgrade pip \
   pip install ansible

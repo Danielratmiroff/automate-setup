@@ -1,0 +1,11 @@
+---
+# Run Tmux role
+- name: Starting Mongodb's tasks
+  hosts: all
+  become: true
+  vars_files: 
+    - vars/variables.yml
+
+  roles: 
+    - mongodb
+      

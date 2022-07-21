@@ -1,0 +1,11 @@
+---
+# Run docker role
+- name: Starting Docker's and Docker-Compose's tasks
+  hosts: all
+  become: true
+  vars_files: 
+    - vars/variables.yml
+
+  roles: 
+    - docker
+      

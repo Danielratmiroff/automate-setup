@@ -1,0 +1,6 @@
+---
+# tasks file for tmux
+- name: Install tmux
+  package:
+    name: tmux
+    state: latest 

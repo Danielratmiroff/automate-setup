@@ -1,0 +1,4 @@
+---
+# tasks file for lazygit
+- name: Installing lazygit
+  shell: "go install {{ repo_url }}"

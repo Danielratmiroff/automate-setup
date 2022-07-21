@@ -1,0 +1,11 @@
+---
+# Install dotfiles 
+- name: Configuring dotfiles
+  hosts: all
+  become: true
+  vars_files: 
+    - vars/variables.yml
+
+  roles: 
+    - dotfiles
+      
