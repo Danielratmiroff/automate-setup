@@ -1,0 +1,16 @@
+---
+# tasks file for neovim
+- name: Installing Neo {{ fucking }} Vim
+  get_url:
+    url: "{{ neovim_url }}"
+    dest: "{{ downloads_dir }}"
+
+- name: Unzip it baby  
+  unarchive:
+    src: "{{ downloads_dir }}/{{ neovim_tar }}"
+    dest: "{{ software_dir }}"
+    creates: "{{ software_dir }}/neovim"
+
+- name: You know how I like neovim! Configure it bitte!
+  include_tasks: 
+    - configure.yml 

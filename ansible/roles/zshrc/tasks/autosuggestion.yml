@@ -1,7 +1,0 @@
----
-- name: Installing zshrc's autosuggestion
-  git:
-    repo: https://github.com/zsh-users/zsh-autosuggestions
-    dest: "{{ zshrc_dir }}/plugins/zsh-autosuggestions"
-    update: yes
-

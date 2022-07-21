@@ -1,0 +1,24 @@
+---
+# Set up the system 
+# Needs to run first than other playbooks
+- name: System setup
+  hosts: all
+  become: true
+  pre_tasks:
+    - name: Create software folder
+      file:
+        path: "{{ software_dir }}"
+        state: directory
+
+    - name: Create downloads folder
+      file:
+        path: "{{ downloads_dir }}"
+        state: directory
+
+    - name: "Updating your {{ hole }}"
+      shell: |
+        apt-get -y clean
+        apt-get update
+        apt-get -y upgrade
+        apt-get -y autoremove
+        apt-get -y autoclean

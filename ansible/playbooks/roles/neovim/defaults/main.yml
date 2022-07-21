@@ -1,0 +1,11 @@
+---
+# defaults file for neovim
+
+neovim_version: 0.7.2
+neovim_file: nvim-linux64
+neovim_tar: "{{ neovim_file }}.tar.gz"
+
+neovim_url: "https://github.com/neovim/neovim/releases/download/v{{ neovim_version }}/{{ neovim_tar }}"
+
+neovim_repo: https://github.com/Danielratmiroff/nvim.git
+config_dir: "~/.config/"

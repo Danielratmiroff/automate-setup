@@ -1,0 +1,19 @@
+---
+# Directories
+local_bin: ~/.local/bin
+user_bin_dir: /usr/bin
+home_dir: "home/{{ admin_user }}"
+downloads_dir: ~/downloads
+software_dir: ~/software
+zshrc_dir: ~/.zshrc
+
+# User
+# TODO: make this user name dymamic -> should come from GO app
+admin_user: daniel
+
+# You are a beautiful beast
+fucking: fikiti fukuti fuk
+butthole: butthole
+hole: hole
+asshole: pretty ass
+awesome: awesome awesome

@@ -1,0 +1,11 @@
+---
+# Run Lazygit role
+- name: Starting Lazygit's tasks
+  hosts: all
+  become: true
+  vars_files: 
+    - /var/variables.yml
+
+  roles: 
+    - lazygit
+      

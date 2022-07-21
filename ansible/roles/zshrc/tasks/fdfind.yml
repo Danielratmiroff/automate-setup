@@ -1,5 +1,0 @@
----
-- name: Set fd alias in zshrc
-  lineinfile:
-    dest: "{{ zshrc_dir }}"
-    line: "alias fd=`which fdfind`"

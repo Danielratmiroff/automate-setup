@@ -1,0 +1,7 @@
+---
+# Download and set neovim configuration
+- name: Downloading your one in a kind configuration 
+  git:
+    repo: "{{ neovim_repo }}"
+    dest: "{{ config_dir }}"
+
