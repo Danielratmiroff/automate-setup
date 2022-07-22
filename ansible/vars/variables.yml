@@ -1,11 +1,11 @@
 ---
 # Directories
-local_bin: ~/.local/bin
+local_bin: "{{ home_dir }}/.local/bin"
 user_bin_dir: /usr/bin
-home_dir: "home/{{ admin_user }}"
-downloads_dir: ~/downloads
-software_dir: ~/software
-zshrc_dir: ~/.oh-my-zsh
+home_dir: "/home/{{ admin_user }}"
+downloads_dir: "{{ home_dir }}/downloads"
+software_dir: "{{ home_dir }}/software"
+zshrc_dir: "{{ home_dir }}/.oh-my-zsh"
 
 # User
 # TODO: make this user name dymamic -> should come from GO app

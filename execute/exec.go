@@ -1,38 +1,63 @@
 package execute
 
 import (
+	"automate-setup/helpers"
 	"bytes"
 	"fmt"
 	"io"
 	"log"
 	"os"
 	"os/exec"
+	"sync"
 )
 
-func Exec(command string) {
+type Playbook struct {
+	name  string
+	print bool
+}
 
-	ansible := "ansible"
-	hosts := fmt.Sprintf("%v/hosts.ini", ansible)
-	playbook := fmt.Sprintf("%v/%v", ansible, command)
+var wg sync.WaitGroup
 
-	// TODO: this could be a string "ansible-.. -key... hosts" that gets splitted with commas
-	cmd := exec.Command("ansible-playbook", "--diff", "-Ki", hosts, playbook)
-	// cmd := exec.Command("ansible-playbook", "-i", ansibleHost, filepath, "--syntax-check" )
-
-	// if runtime.GOOS == "windows" {
-	// cmd = exec.Command("tasklist")
-	// }
-
-	var stdoutBuf, stderrBuf bytes.Buffer
-	cmd.Stdout = io.MultiWriter(os.Stdout, &stdoutBuf)
-	cmd.Stderr = io.MultiWriter(os.Stderr, &stderrBuf)
-
-	err := cmd.Run()
-	if err != nil {
-		log.Fatalf("cmd.Run() failed with %s\n", err)
+func Start() {
+	setup := &Playbook{
+		name:  "setup-playbook",
+		print: true,
 	}
-	// TODO: as of now, prints double messages (progress and end)
-	outStr, errStr := stdoutBuf.String(), stderrBuf.String()
-	fmt.Printf("\nout:\n%s\nerr:\n%s\n", outStr, errStr)
 
+	sudoPass := helpers.AskForInput("Please enter your sudo/admin password")
+	if sudoPass == "" {
+		return
+	}
+
+	wg.Add(2)
+	go RunPlaybook(setup, sudoPass)
+	go RunPlaybook(setup, sudoPass)
+	wg.Wait()
+}
+
+func RunPlaybook(playbook *Playbook, sudoPass string) {
+	// TODO: reformat these variables -- continue here
+	ansibleFolder := "ansible/"
+  inventoryPath := ansibleFolder + "inventory.yaml"
+	formattedFile := ansibleFolder + playbook.name  ".yml"
+	adminRights := "ansible_become_pass=" + sudoPass
+
+	cmd := exec.Command("ansible-playbook", "--diff", "-i", inventoryPath, formattedFile, "-e", adminRights, "--check")
+
+	if playbook.print {
+
+		var stdoutBuf, stderrBuf bytes.Buffer
+		cmd.Stdout = io.MultiWriter(os.Stdout, &stdoutBuf)
+		cmd.Stderr = io.MultiWriter(os.Stderr, &stderrBuf)
+		err := cmd.Run()
+		if err != nil {
+			log.Fatalf("cmd.Run() failed with %s\n", err)
+		}
+		// Hidden outStr
+		_, errStr := stdoutBuf.String(), stderrBuf.String()
+		if errStr != "" {
+			fmt.Printf("err:\n%s\n", errStr)
+		}
+	}
+	defer wg.Done()
 }
