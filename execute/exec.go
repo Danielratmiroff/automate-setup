@@ -19,30 +19,70 @@ type Playbook struct {
 var wg sync.WaitGroup
 
 func Start() {
+
+	// TODO: ask for user name to login into
+
+	sudoPass := helpers.AskForInput("Please enter your sudo/admin password\n")
+	if sudoPass == "" {
+		fmt.Println("Sorry, we need those juicy admin rights")
+		return
+	}
+
 	setup := &Playbook{
 		name:  "setup-playbook",
 		print: true,
 	}
+	RunPlaybook(setup, sudoPass)
 
-	sudoPass := helpers.AskForInput("Please enter your sudo/admin password")
-	if sudoPass == "" {
-		return
+	pkgs := &Playbook{
+		name:  "play-pkgs",
+		print: true,
 	}
+	RunPlaybook(pkgs, sudoPass)
 
-	wg.Add(2)
-	go RunPlaybook(setup, sudoPass)
-	go RunPlaybook(setup, sudoPass)
+	docker := &Playbook{
+		name:  "play-docker",
+		print: false,
+	}
+	lazygit := &Playbook{
+		name:  "play-lazygit",
+		print: false,
+	}
+	neovim := &Playbook{
+		name:  "play-neovim",
+		print: true,
+	}
+	zshrc := &Playbook{
+		name:  "play-zshrc",
+		print: false,
+	}
+	wg.Add(4)
+	go RunPlaybook(docker, sudoPass)
+	go RunPlaybook(lazygit, sudoPass)
+	go RunPlaybook(neovim, sudoPass)
+	go RunPlaybook(zshrc, sudoPass)
 	wg.Wait()
+
+	dotfiles := &Playbook{
+		name:  "play-dotfiles",
+		print: true,
+	}
+	RunPlaybook(dotfiles, sudoPass)
+
+	// mongo := &Playbook{
+	//  name:  "play-mongo",
+	//  print: false,
+	//}
+	// RunPlaybook(mongodb, sudoPass) -- disabled bc playbook is unfinished (maybe unnecessary?)
 }
 
 func RunPlaybook(playbook *Playbook, sudoPass string) {
-	// TODO: reformat these variables -- continue here
-	ansibleFolder := "ansible/"
-  inventoryPath := ansibleFolder + "inventory.yaml"
-	formattedFile := ansibleFolder + playbook.name  ".yml"
-	adminRights := "ansible_become_pass=" + sudoPass
+	ansibleFolder := "ansible"
+	inventoryPath := fmt.Sprintf("%v/inventory.yml", ansibleFolder)               // ansible/inventory.yml
+	formattedFile := fmt.Sprintf("%v/%v%v", ansibleFolder, playbook.name, ".yml") // ansible/playbook.yml
+	becomeSudo := fmt.Sprintf("-e ansible_become_pass=%v", sudoPass)              // sudo user pwd
 
-	cmd := exec.Command("ansible-playbook", "--diff", "-i", inventoryPath, formattedFile, "-e", adminRights, "--check")
+	cmd := exec.Command("ansible-playbook", "--diff", "-i", inventoryPath, formattedFile, becomeSudo, "--check")
 
 	if playbook.print {
 
