@@ -78,11 +78,12 @@ func Start() {
 
 func RunPlaybook(playbook *Playbook, sudoPass string) {
 	ansibleFolder := "ansible"
-	inventoryPath := fmt.Sprintf("%v/inventory.yml", ansibleFolder)               // ansible/inventory.yml
-	formattedFile := fmt.Sprintf("%v/%v%v", ansibleFolder, playbook.name, ".yml") // ansible/playbook.yml
-	becomeSudo := fmt.Sprintf("-e ansible_become_pass=%v", sudoPass)              // sudo user pwd
+	inventoryPath := ansibleFolder + "inventory.yml"
+	formattedFile := ansibleFolder + playbook.name + ".yml"
+	becomeSudo := "-e ansible_become_pass=" + sudoPass
 
-	cmd := exec.Command("ansible-playbook", "--diff", "-i", inventoryPath, formattedFile, becomeSudo, "--check")
+	cmd := exec.Command("ansible-playbook", "--diff", "-i", inventoryPath, formattedFile, becomeSudo, "--check") // check for testing
+	// cmd := exec.Command("ansible-playbook", "--diff", "-i", inventoryPath, formattedFile, becomeSudo )
 
 	if playbook.print {
 
