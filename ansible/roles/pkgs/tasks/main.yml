@@ -1,29 +1,14 @@
 ---
 # tasks for pkgs
-- name: "Installing your {{ asshole }} pkgs"
-  include_tasks: "{{ item }}"
-  loop:
-    - direnv.yml
-
-# Install pkgs if not already installed.
-- name: Install packageeesss
+- name: "Installing your primary {{ asshole }} pkgs"
   include_tasks: "install.yml"
   vars:
     pkg: "{{ item }}"
   loop:
     - "git"
-    - "pandoc"
     - "unzip"
     - "gzip"
-    - "pipenv"
-    - "progress"
-    - "findutils"
-    - "gawk"
-    - "ripgrep"
     - "golang"
-    - "fd-find"
     - "curl"
     - "wget"
     - "software-properties-common"
-    - "npm"
-    - "nodejs"

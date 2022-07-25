@@ -1,4 +1,11 @@
 ---
 # tasks file for lazygit
+- name: Cloning lazygit repo
+  git: 
+    repo: "{{ repo_url  }}"
+    dest: "{{ home_dir }}/lazygit"
+
 - name: Installing lazygit
-  shell: "go install {{ repo_url }}"
+  shell: 
+    chdir: "{{ home_dir }}/lazygit"
+    cmd: go install

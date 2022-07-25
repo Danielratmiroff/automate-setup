@@ -5,6 +5,5 @@
   loop:
     - install.yml
     - plugins.yml
-    - dotfiles.yml
   
 

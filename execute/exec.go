@@ -22,7 +22,7 @@ func Start() {
 
 	// TODO: ask for user name to login into
 
-	sudoPass := helpers.AskForInput("Please enter your sudo/admin password\n")
+	sudoPass := helpers.AskForInput("\nPlease enter your sudo/admin password\n")
 	if sudoPass == "" {
 		fmt.Println("Sorry, we need those juicy admin rights")
 		return
@@ -32,18 +32,18 @@ func Start() {
 		name:  "setup-playbook",
 		print: true,
 	}
-	RunPlaybook(setup, sudoPass)
+	RunPlaybook(setup, sudoPass, false)
 
 	pkgs := &Playbook{
 		name:  "play-pkgs",
 		print: true,
 	}
-	RunPlaybook(pkgs, sudoPass)
+	RunPlaybook(pkgs, sudoPass, false)
 
-	docker := &Playbook{
-		name:  "play-docker",
-		print: false,
-	}
+	// docker := &Playbook{
+	// 	name:  "play-docker",
+	// 	print: false,
+	// }
 	lazygit := &Playbook{
 		name:  "play-lazygit",
 		print: false,
@@ -56,18 +56,25 @@ func Start() {
 		name:  "play-zshrc",
 		print: false,
 	}
-	wg.Add(4)
-	go RunPlaybook(docker, sudoPass)
-	go RunPlaybook(lazygit, sudoPass)
-	go RunPlaybook(neovim, sudoPass)
-	go RunPlaybook(zshrc, sudoPass)
+	secondaryPkgs := &Playbook{
+		name:  "play-secondary-pkgs",
+		print: false,
+	}
+
+	// TODO: refactor playbook struct, waitgroup bool and printing all playbooks
+	wg.Add(3)
+	go RunPlaybook(secondaryPkgs, sudoPass, true)
+	// go RunPlaybook(docker, sudoPass, true)
+	go RunPlaybook(lazygit, sudoPass, true)
+	go RunPlaybook(neovim, sudoPass, true)
 	wg.Wait()
 
+	go RunPlaybook(zshrc, sudoPass, true)
 	dotfiles := &Playbook{
 		name:  "play-dotfiles",
 		print: true,
 	}
-	RunPlaybook(dotfiles, sudoPass)
+	RunPlaybook(dotfiles, sudoPass, false)
 
 	// mongo := &Playbook{
 	//  name:  "play-mongo",
@@ -76,29 +83,28 @@ func Start() {
 	// RunPlaybook(mongodb, sudoPass) -- disabled bc playbook is unfinished (maybe unnecessary?)
 }
 
-func RunPlaybook(playbook *Playbook, sudoPass string) {
-	ansibleFolder := "ansible"
+func RunPlaybook(playbook *Playbook, sudoPass string, wait_group bool) {
+	ansibleFolder := "ansible/"
 	inventoryPath := ansibleFolder + "inventory.yml"
 	formattedFile := ansibleFolder + playbook.name + ".yml"
 	becomeSudo := "-e ansible_become_pass=" + sudoPass
 
-	cmd := exec.Command("ansible-playbook", "--diff", "-i", inventoryPath, formattedFile, becomeSudo, "--check") // check for testing
-	// cmd := exec.Command("ansible-playbook", "--diff", "-i", inventoryPath, formattedFile, becomeSudo )
+	// cmd := exec.Command("ansible-playbook", "--diff", "-i", inventoryPath, formattedFile, becomeSudo, "--check") // check for testing
+	cmd := exec.Command("ansible-playbook", "-i", inventoryPath, formattedFile, becomeSudo)
 
-	if playbook.print {
-
-		var stdoutBuf, stderrBuf bytes.Buffer
-		cmd.Stdout = io.MultiWriter(os.Stdout, &stdoutBuf)
-		cmd.Stderr = io.MultiWriter(os.Stderr, &stderrBuf)
-		err := cmd.Run()
-		if err != nil {
-			log.Fatalf("cmd.Run() failed with %s\n", err)
-		}
-		// Hidden outStr
-		_, errStr := stdoutBuf.String(), stderrBuf.String()
-		if errStr != "" {
-			fmt.Printf("err:\n%s\n", errStr)
-		}
+	var stdoutBuf, stderrBuf bytes.Buffer
+	cmd.Stdout = io.MultiWriter(os.Stdout, &stdoutBuf)
+	cmd.Stderr = io.MultiWriter(os.Stderr, &stderrBuf)
+	err := cmd.Run()
+	if err != nil {
+		log.Fatalf("cmd.Run() failed with %s\n", err)
 	}
-	defer wg.Done()
+	// Hidden outStr
+	_, errStr := stdoutBuf.String(), stderrBuf.String()
+	if errStr != "" {
+		fmt.Printf("err:\n%s\n", errStr)
+	}
+	if wait_group {
+		defer wg.Done()
+	}
 }

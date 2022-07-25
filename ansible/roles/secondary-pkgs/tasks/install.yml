@@ -1,0 +1,12 @@
+---
+- name: "Is {{ pkg }} in our packages?"
+  package_facts:
+    manager: auto
+
+- name: "Installing {{ pkg }} in your {{ butthole }}"
+  package:
+    name: "{{ pkg }}"
+    state: latest
+    install_recommends: yes
+  when: 'pkg not in ansible_facts.packages'
+
