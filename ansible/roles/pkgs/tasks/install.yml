@@ -3,7 +3,7 @@
   package_facts:
     manager: auto
 
-- name: "Installing {{ pkg }} in your {{ butthole }}"
+- name: "Installing {{ pkg }} into your {{ butthole }}"
   package:
     name: "{{ pkg }}"
     state: latest

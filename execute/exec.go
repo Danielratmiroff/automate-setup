@@ -61,6 +61,7 @@ func Start() {
 		print: false,
 	}
 
+	// continue here :: need to run once more docker-run to test
 	// TODO: refactor playbook struct, waitgroup bool and printing all playbooks
 	wg.Add(3)
 	go RunPlaybook(secondaryPkgs, sudoPass, true)

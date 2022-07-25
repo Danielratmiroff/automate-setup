@@ -5,8 +5,7 @@
     repo: "{{ dotfiles_repo }}"
     dest: "{{ dotfiles_dir }}"
 
-# Configure tmux
-- name: "Configuring {{ item }}"
+- name: "Configuring dotfiles"
   copy: 
     src: "{{ dotfiles_dir }}/{{ item }}"
     dest: "~/"
