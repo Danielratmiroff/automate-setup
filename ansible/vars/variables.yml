@@ -1,19 +1,46 @@
 ---
-# Directories
-local_bin: "{{ home_dir }}/.local/bin"
-user_bin_dir: /usr/bin
-home_dir: "/home/{{ admin_user }}"
-downloads_dir: "{{ home_dir }}/Downloads"
-software_dir: "{{ home_dir }}/Software"
-zshrc_dir: "{{ home_dir }}/.oh-my-zsh"
-
+# ----
 # User
-# TODO: make this user name dymamic -> should come from GO app
+# ----
 admin_user: daniel
 
-# You are a beautiful beast
-fucking: fikiti fukuti fuk
-butthole: butthole
-hole: hole
-asshole: pretty ass
-awesome: awesome awesome
+
+# -----------
+# Directories
+# -----------
+home_dir: "/home/{{ admin_user }}"
+user_bin_dir: /usr/bin
+local_bin: "{{ home_dir }}/.local/bin"
+
+
+# ----------------
+# Standard folders
+# ----------------
+downloads_dir: "{{ home_dir }}/Downloads"
+software_dir: "{{ home_dir }}/Software"
+
+# ---------------------
+# Configuration folders
+# ---------------------
+config_dir: "{{ home_dir }}/.config"
+
+# Neovim
+neovim_config_dir: "{{ config_dir }}/nvim"
+neovim_install_dir: "{{ software_dir }}/neovim"
+
+# Fish
+fish_config_dir: "{{ config_dir }}/fish"
+omf_config_dir: "{{ config_dir }}/omf"
+
+# Zshrc
+zshrc_dir: "{{ home_dir }}/.oh-my-zsh"
+ohmyzsh_plugins_dir: "{{ zshrc_dir }}/plugins/"
+
+# Direnv
+direnv_dir: "{{ user_bin_dir }}/direnv"
+
+# Dotfiles
+dotfiles_dir: "{{ home_dir }}/.dotfiles"
+
+# Lazygit
+lazygit_dir: "{{ home_dir }}/lazygit"

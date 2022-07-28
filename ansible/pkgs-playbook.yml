@@ -1,0 +1,37 @@
+---
+# Install all packages
+- name: Starting packages's tasks
+  hosts: all
+  become: true
+  vars_files: 
+    - vars/variables.yml
+    - vars/pk
+
+  block:  
+  - name: "Installing your primary {{ asshole }} pkgs"
+    include_tasks: "install.yml"
+    vars:
+      pkg: "{{ item }}"
+    loop:
+      - "git"
+      - "unzip"
+      - "gzip"
+      - "curl"
+      - "wget"
+  
+  - name: "Installing golang"
+    include_tasks: "golang.yml"
+
+      # TODO: continue here -- finalise fixing this task (include it in installing)
+# need to merge all pkgs and also direnv
+- name: "Is {{ pkg }} in our packages?"
+  package_facts:
+    manager: auto
+
+- name: "Installing {{ pkg }} into your {{ butthole }}"
+  package:
+    name: "{{ pkg }}"
+    state: latest
+    install_recommends: yes
+  when: 'pkg not in ansible_facts.packages'
+

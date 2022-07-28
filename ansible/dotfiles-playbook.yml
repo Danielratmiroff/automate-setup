@@ -1,0 +1,33 @@
+---
+# Install dotfiles 
+- name: Configuring dotfiles
+  hosts: all
+  become: true
+  vars_files: 
+    - vars/dotfiles-vars.yml
+    - vars/variables.yml
+  
+  block:  
+  - name: Downloading your fucking dotfiles
+    git:
+      repo: "{{ dotfiles_repo }}"
+      dest: "{{ dotfiles_dir }}"
+  
+  - name: "Configuring dotfiles"
+    copy: 
+      src: "{{ dotfiles_dir }}/{{ item }}"
+      dest: "~/"
+    loop:
+      - ".tmux.conf"
+      - ".zshrc"
+      - ".profile"
+      - ".p10k.zsh"
+  
+  - name: "Configuring fish"
+    copy: 
+      src: "{{ dotfiles_dir }}/{{ item }}"
+        # TODO: configure fish
+      dest: "{{ config_dir_fish }}"
+    loop:
+      - "fish"
+      - "omf"

@@ -1,0 +1,10 @@
+---
+# variables for ohmyzsh
+
+ohmyzsh_installer: https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh
+
+ohmyzsh_p10k_installer: https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+
+ohmyzsh_highlight: https://github.com/zsh-users/zsh-syntax-highlighting.git
+
+ohmyzsh_autosuggestion: https://github.com/zsh-users/zsh-autosuggestions

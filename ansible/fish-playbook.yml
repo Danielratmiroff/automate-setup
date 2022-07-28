@@ -1,0 +1,27 @@
+---
+# Install fish shell 
+- name: Installing fish shell
+  hosts: all
+  become: true
+  vars_files: 
+    - vars/fish-vars.yml
+    - vars/variables.yml
+  
+  block:  
+  - name: Installing fish package
+    package:
+      name: fish
+      state: present
+  
+  - name: Get fish installed path.
+    command: "which fish"
+    register: fish_installed_path
+    changed_when: false
+  
+  - name: Set user shell to fish.
+    shell: "chsh -s $(which fish)"
+  
+  # tasks for Oh My Fish
+  - name: Installing oh-my-fish
+    shell: "curl jttps://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish"
+    

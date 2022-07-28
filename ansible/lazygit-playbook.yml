@@ -1,0 +1,19 @@
+---
+# Run Lazygit role
+- name: Starting Lazygit's tasks
+  hosts: all
+  become: true
+  vars_files: 
+    - vars/lazygit-vars.yml
+    - vars/variables.yml
+
+  block: 
+   - name: Cloning lazygit repo
+     git: 
+       repo: "{{ repo_url  }}"
+       dest: "{{ lazygit_dir }}"
+   
+   - name: Installing lazygit
+     shell: 
+       chdir: "{{ lazygit_dir }}"
+       cmd: go install

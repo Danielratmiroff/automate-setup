@@ -1,6 +1,6 @@
 ---
 # tasks file for updating dotfiles configuration
-- name: Downloading your {{ fucking }} dotfiles
+- name: Downloading your fucking dotfiles
   git:
     repo: "{{ dotfiles_repo }}"
     dest: "{{ dotfiles_dir }}"
@@ -18,7 +18,7 @@
 - name: "Configuring fish"
   copy: 
     src: "{{ dotfiles_dir }}/{{ item }}"
-    dest: "~/.config/"
+    dest: "{{ config_dir }}"
   loop:
     - "fish"
     - "omf"
