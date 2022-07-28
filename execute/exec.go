@@ -64,14 +64,14 @@ func Start() {
 		print: false,
 	}
 
-	// continue here :: need to run once more docker-run to test
 	// TODO: refactor playbook struct, waitgroup bool and printing all playbooks
-	wg.Add(4)
+	// TODO: disabled wait group until all tests pass
+	// wg.Add(4)
 	go RunPlaybook(secondaryPkgs, sudoPass, true)
 	go RunPlaybook(docker, sudoPass, true)
 	go RunPlaybook(lazygit, sudoPass, true)
 	go RunPlaybook(neovim, sudoPass, true)
-	wg.Wait()
+	// wg.Wait()
 
 	// RunPlaybook(zshrc, sudoPass, true)
 	RunPlaybook(fish, sudoPass, true)
@@ -110,7 +110,7 @@ func RunPlaybook(playbook *Playbook, sudoPass string, wait_group bool) {
 	if errStr != "" {
 		fmt.Printf("err:\n%s\n", errStr)
 	}
-	if wait_group {
-		defer wg.Done()
-	}
+	// if wait_group {
+	// 	defer wg.Done()
+	// }
 }
