@@ -20,3 +20,6 @@
     - "gawk"
     - "npm"
     - "nodejs"
+    - "fish"
+    - "peco"
+    - "exa"

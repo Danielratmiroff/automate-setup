@@ -10,13 +10,14 @@ import (
 var ansible = "ansible"
 var python = "python3"
 var pip = "pip"
-var apt = "apt-get"
+var sudo = "sudo"
+var apt = "apt"
 
 func StartAnsible() bool {
 	hasAnsible := checkIfExists(ansible)
 
 	if !hasAnsible {
-		install := helpers.AskForConfirmation("Shall I install it for you dear?\nRequirements: Python3 & pip")
+		install := helpers.AskForConfirmation("Shall I install it for you dear?")
 		if install {
 			installAnsible()
 		} else {
@@ -26,9 +27,11 @@ func StartAnsible() bool {
 		update := helpers.AskForConfirmation("Shall I update it for you?")
 		if update {
 			fmt.Println("Updating ansible...")
-			err := exec.Command(python, "-m", pip, "install", "upgrade", "--user", ansible).Run()
-			if err != nil {
-				log.Fatalf("Failed to update ansible :%v", err)
+			errAn := exec.Command(sudo, apt, "update", "ansible").Run()
+			helpers.HandleError(errAn, "Failed to update ansible")
+			// err := exec.Command(python, "-m", pip, "install", "upgrade", "--user", ansible).Run()
+			if errAn != nil {
+				log.Fatalf("Failed to update ansible :%v", errAn)
 			}
 		} else {
 			// Skip check if no update is required
@@ -39,40 +42,85 @@ func StartAnsible() bool {
 }
 
 func installAnsible() {
-	fmt.Println("\nInstalling ansible...")
-	// TODO: add shell completion? https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html - Installing argcomplete
-	hasPython := checkIfExists(python)
-	if !hasPython {
-		fmt.Println("\nInstalling python...")
-		err := exec.Command(apt, "install", python).Run()
-		if err != nil {
-			log.Fatalf("Could not install python: %v", err)
-			return
-		}
-	}
+	fmt.Println("\nUpdating the system...")
+	err := exec.Command(sudo, apt, "update").Run()
+	helpers.HandleError(err, "Failed to update the system")
 
-	hasPip := checkIfExists(pip)
-	if !hasPip {
-		fmt.Println("\nInstalling pip...")
-		err := exec.Command(apt, "install", "python3-pip", "-y").Run()
-		if err != nil {
-			log.Fatalf("Could not install pip: %v", err)
-			return
-		}
-	}
+	fmt.Println("\nInstalling required packages...")
+	errPkg := exec.Command(sudo, apt, "install", "software-properties-common").Run()
+	helpers.HandleError(errPkg, "Failed to install required packages")
+
+	fmt.Println("\nInstalling ansible's PPA repository...")
+	errRp := exec.Command(sudo, "add-apt-repository", "--yes", "--update", "ppa:ansible/ansible").Run()
+	helpers.HandleError(errRp, "Failed to add required repository")
 
 	fmt.Println("\nInstalling ansible...")
-	err := exec.Command(python, "-m", pip, "install", ansible).Run()
-	if err != nil {
-		log.Fatalf("Could not install ansible: %v", err)
-		return
-	}
+	errAn := exec.Command(sudo, apt, "install", "ansible", "-y").Run()
+	helpers.HandleError(errAn, "Failed to install ansible")
 
-	version, err := exec.Command(ansible, "--version").Output()
-	if err != nil {
-		log.Fatalf("Could not find ansible: %v", err)
-		return
+	// Check ansible version
+	version, errVer := exec.Command(ansible, "--version").Output()
+	if errVer != nil {
+		log.Fatalf("Could not find ansible: %v", errVer)
+	} else {
+		fmt.Printf("Installed ansible successfully!\n%v\n", string(version))
 	}
-
-	fmt.Printf("Installed ansible successfully!\n%v\n", string(version))
 }
+
+// Install ansible using python3
+// 	fmt.Println("\nInstalling basic requirements to run ansible...")
+// 	// TODO: add shell completion? https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html - Installing argcomplete
+//
+// 	// Install python
+// 	hasPython := checkIfExists(python)
+// 	if !hasPython {
+// 		fmt.Println("\nInstalling python...")
+// 		err := exec.Command(sudo, apt, "install", python).Run()
+// 		if err != nil {
+// 			log.Fatalf("Could not install %v: %v", python, err)
+// 			return
+// 		} else {
+// 			fmt.Println("\nSuccessfully installed pip")
+// 		}
+//
+// 	}
+//
+// 	// Install pip
+// 	hasPip := checkIfExists(pip)
+// 	if !hasPip {
+// 		fmt.Println("\nInstalling pip...")
+// 		err := exec.Command(sudo, apt, "install", "python3-pip", "-y").Run()
+// 		if err != nil {
+// 			log.Fatalf("Could not install %v: %v", pip, err)
+// 			return
+// 		} else {
+// 			fmt.Println("\nSuccessfully installed pip")
+// 		}
+// 	}
+// 	// Install ansible
+// 	fmt.Println("\nInstalling ansible...")
+// 	err := exec.Command(python, "-m", pip, "install", ansible, "--user").Run()
+// 	if err != nil {
+// 		log.Fatalf("Could not install %v: %v", ansible, err)
+// 		return
+// 	}
+//
+// 	// pip install --user ansible
+//
+// 	// Add .local/bin to PATH
+// 	fmt.Println("\nAdding '.local/bin' to your $PATH...")
+// 	path := os.Getenv("PATH")
+// 	os.Setenv("PATH", "$HOME/.local/bin/"+path)
+// 	fmt.Println("\nSuccessfully added '.local/bin' to your path")
+//
+// 	// Check ansible version
+// 	version, err := exec.Command(ansible, "--version").Output()
+// 	if err != nil {
+// 		log.Fatalf("Could not find ansible: %v", err)
+// 		fmt.Println("")
+// 		return
+// 	} else {
+// 		fmt.Printf("Installed ansible successfully!\n%v\n", string(version))
+// 	}
+//
+// }

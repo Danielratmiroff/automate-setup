@@ -14,3 +14,11 @@
     - ".zshrc"
     - ".profile"
     - ".p10k.zsh"
+
+- name: "Configuring fish"
+  copy: 
+    src: "{{ dotfiles_dir }}/{{ item }}"
+    dest: "~/.config/"
+  loop:
+    - "fish"
+    - "omf"

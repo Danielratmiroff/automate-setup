@@ -3,8 +3,8 @@
 local_bin: "{{ home_dir }}/.local/bin"
 user_bin_dir: /usr/bin
 home_dir: "/home/{{ admin_user }}"
-downloads_dir: "{{ home_dir }}/downloads"
-software_dir: "{{ home_dir }}/software"
+downloads_dir: "{{ home_dir }}/Downloads"
+software_dir: "{{ home_dir }}/Software"
 zshrc_dir: "{{ home_dir }}/.oh-my-zsh"
 
 # User

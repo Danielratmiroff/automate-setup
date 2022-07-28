@@ -12,7 +12,7 @@ func checkIfExists(program string) bool {
 		fmt.Printf("Didn't find '%v' executable\n", program)
 		return false
 	} else {
-		fmt.Printf("Found in '%s'\n", path)
+		fmt.Printf("Found in '%s'\n\n", path)
 		return true
 	}
 }

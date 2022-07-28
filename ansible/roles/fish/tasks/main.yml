@@ -1,0 +1,20 @@
+---
+# tasks file for fish
+---
+- name: Install fish shell for Linux.
+  package:
+    name: fish
+    state: present
+
+- name: Get fish installed path.
+  command: "which fish"
+  register: zsh_installed_path
+  changed_when: false
+
+- name: Set user shell to fish.
+  shell: "chsh -s $(which fish)"
+
+# tasks for Oh My Fish
+- name: Installing oh-my-fish
+  shell: "curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish"
+    

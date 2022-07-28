@@ -9,6 +9,7 @@
     - name: Create the file, if it doesnt exist already
       file:
         path: "{{ direnv_dir }}"
+        force: yes
         state: directory
 
 - name: Install direnv

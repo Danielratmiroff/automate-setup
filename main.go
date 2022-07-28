@@ -14,9 +14,14 @@ func main() {
 	fmt.Printf("Hello %s!\n",
 		user.Username)
 
-	hasAnsible := installer.StartAnsible()
+	if user.Username != "daniel" {
+		fmt.Println("\nUsername needs to be 'daniel' in order for the installation to work\nPlease update it and try again.")
+		return
+	}
 
-	if hasAnsible {
+	startAnsible := installer.StartAnsible()
+
+	if startAnsible {
 		playbooks.Start()
 	}
 }

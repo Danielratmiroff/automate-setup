@@ -21,7 +21,6 @@ var wg sync.WaitGroup
 func Start() {
 
 	// TODO: ask for user name to login into
-
 	sudoPass := helpers.AskForInput("\nPlease enter your sudo/admin password\n")
 	if sudoPass == "" {
 		fmt.Println("Sorry, we need those juicy admin rights")
@@ -40,10 +39,10 @@ func Start() {
 	}
 	RunPlaybook(pkgs, sudoPass, false)
 
-	// docker := &Playbook{
-	// 	name:  "play-docker",
-	// 	print: false,
-	// }
+	docker := &Playbook{
+		name:  "play-docker",
+		print: false,
+	}
 	lazygit := &Playbook{
 		name:  "play-lazygit",
 		print: false,
@@ -52,8 +51,12 @@ func Start() {
 		name:  "play-neovim",
 		print: true,
 	}
-	zshrc := &Playbook{
-		name:  "play-zshrc",
+	// zshrc := &Playbook{
+	// 	name:  "play-zshrc",
+	// 	print: false,
+	// }
+	fish := &Playbook{
+		name:  "play-fish",
 		print: false,
 	}
 	secondaryPkgs := &Playbook{
@@ -63,14 +66,16 @@ func Start() {
 
 	// continue here :: need to run once more docker-run to test
 	// TODO: refactor playbook struct, waitgroup bool and printing all playbooks
-	wg.Add(3)
+	wg.Add(4)
 	go RunPlaybook(secondaryPkgs, sudoPass, true)
-	// go RunPlaybook(docker, sudoPass, true)
+	go RunPlaybook(docker, sudoPass, true)
 	go RunPlaybook(lazygit, sudoPass, true)
 	go RunPlaybook(neovim, sudoPass, true)
 	wg.Wait()
 
-	go RunPlaybook(zshrc, sudoPass, true)
+	// RunPlaybook(zshrc, sudoPass, true)
+	RunPlaybook(fish, sudoPass, true)
+
 	dotfiles := &Playbook{
 		name:  "play-dotfiles",
 		print: true,

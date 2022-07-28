@@ -8,7 +8,8 @@
     - "git"
     - "unzip"
     - "gzip"
-    - "golang"
     - "curl"
     - "wget"
-    - "software-properties-common"
+
+- name: "Installing golang"
+  include_tasks: "golang.yml"

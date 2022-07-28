@@ -1,0 +1,6 @@
+---
+- name: Getting golang tar
+  unarchive:
+    src: "{{ golang_url }}"
+    dest: /usr/local/bin
+    remote_src: yes

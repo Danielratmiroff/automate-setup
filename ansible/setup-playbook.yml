@@ -20,8 +20,5 @@
 
     - name: "Updating your {{ asshole }}"
       shell: |
-        apt-get -y clean
         apt-get update
         apt-get -y upgrade
-        apt-get -y autoremove
-        apt-get -y autoclean
