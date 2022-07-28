@@ -2,6 +2,8 @@
 Set me up 
 
 packages to be added:
-- exa
+- ...
+
+configuration or dotfiles to be added:
 - fish
-- peco
+- omf
