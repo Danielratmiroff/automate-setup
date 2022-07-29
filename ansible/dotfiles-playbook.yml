@@ -26,8 +26,7 @@
   - name: "Configuring fish"
     copy: 
       src: "{{ dotfiles_dir }}/{{ item }}"
-        # TODO: configure fish
-      dest: "{{ config_dir_fish }}"
+      dest: "{{ fish_config_dir }}"
     loop:
       - "fish"
       - "omf"

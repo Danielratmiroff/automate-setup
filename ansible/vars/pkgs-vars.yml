@@ -1,0 +1,21 @@
+---
+# PPA to install
+pkgs:
+  - "git"
+  - "unzip"
+  - "gzip"
+  - "curl"
+  - "wget"
+  - "fd-find"
+  - "ripgrep"
+  - "pandoc"
+  - "pipenv"
+  - "progress"
+  - "findutils"
+  - "gawk"
+  - "npm"
+  - "nodejs"
+  - "fish"
+  - "peco"
+  - "exa"
+  - "tmux"

@@ -11,17 +11,13 @@ import (
 func main() {
 	user, err := user.Current()
 	helpers.HandleError(err, "No user found")
-	fmt.Printf("Hello %s!\n",
-		user.Username)
 
-	if user.Username != "daniel" {
-		fmt.Println("\nUsername needs to be 'daniel' in order for the installation to work\nPlease update it and try again.")
-		return
-	}
+	username := user.Username
+	fmt.Printf("Hello %s!\n", username)
 
 	startAnsible := installer.StartAnsible()
 
 	if startAnsible {
-		playbooks.Start()
+		playbooks.Start(username)
 	}
 }

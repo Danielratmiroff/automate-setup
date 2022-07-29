@@ -5,33 +5,49 @@
   become: true
   vars_files: 
     - vars/variables.yml
-    - vars/pk
+    - vars/pkgs-vars.yml
 
+  # Install all PPAs
   block:  
-  - name: "Installing your primary {{ asshole }} pkgs"
-    include_tasks: "install.yml"
-    vars:
-      pkg: "{{ item }}"
-    loop:
-      - "git"
-      - "unzip"
-      - "gzip"
-      - "curl"
-      - "wget"
+  - name: "Is {{ pkgs }} in our packages?"
+    package_facts:
+      manager: auto
   
-  - name: "Installing golang"
-    include_tasks: "golang.yml"
+  - name: "Installing {{ pkgs }} into your {{ butthole }}"
+    package:
+      name: "{{ pkgs }}"
+      state: latest
+      install_recommends: yes
+    when: 'pkgs not in ansible_facts.packages'
+  
+# Install golang
+- name: "Installing golang"
+  unarchive:
+    src: "{{ golang_url }}"
+    dest: /usr/local/bin
+    remote_src: yes
 
-      # TODO: continue here -- finalise fixing this task (include it in installing)
-# need to merge all pkgs and also direnv
-- name: "Is {{ pkg }} in our packages?"
-  package_facts:
-    manager: auto
+# Install yarn
+- name: Installing yarn
+  shell: "npm install -g yarn"
 
-- name: "Installing {{ pkg }} into your {{ butthole }}"
-  package:
-    name: "{{ pkg }}"
-    state: latest
-    install_recommends: yes
-  when: 'pkg not in ansible_facts.packages'
+# Install direnv
+- name: Create direnv folder
+  block:
+    - name: Check if folder exists
+      stat:
+        path: "{{ direnv_dir }}"
+      register: stat_result
 
+    - name: Create the file, if it doesnt exist already
+      file:
+        path: "{{ direnv_dir }}"
+        state: directory
+      when: stat_result == None
+
+- name: Install direnv
+  vars_files:
+    - vars/direnv-vars.yml
+  get_url:
+    url: "{{ direnv_url }}"
+    dest: "{{ direnv_dir }}"

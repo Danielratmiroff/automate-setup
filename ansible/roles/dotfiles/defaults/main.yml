@@ -1,4 +1,0 @@
----
-# defaults file for dotfiles
-dotfiles_repo: https://github.com/Danielratmiroff/dotfiles.git
-dotfiles_dir: ~/.dotfiles

@@ -18,7 +18,7 @@
         path: "{{ downloads_dir }}"
         state: directory
 
-    - name: "Updating your {{ asshole }}"
+    - name: "Updating your butthole..."
       shell: |
         apt-get update
         apt-get -y upgrade

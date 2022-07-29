@@ -1,9 +1,0 @@
----
-# tasks for zsh & ohmyzsh
-- name: Installing zshrc & ohmyzsh you lazyass
-  include_tasks: "{{ item }}"
-  loop:
-    - install.yml
-    - plugins.yml
-  
-

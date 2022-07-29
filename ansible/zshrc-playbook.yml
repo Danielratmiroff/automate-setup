@@ -1,4 +1,22 @@
 ---
+# Install zshrc 
+- name: Install zsh for Linux.
+  package:
+    name: zsh
+    state: present
+
+- name: Get zsh installed path.
+  command: "which zsh"
+  register: zsh_installed_path
+  changed_when: false
+
+- name: Set user shell to zsh.
+  shell: "chsh -s $(which zsh)"
+
+# tasks for Oh My Zsh
+- name: Installing oh-my-zsh
+  shell: "sh -c \"$(curl -fsSL {{ ohmyzsh_installer }})\""
+    
 - name: Highlighting 
   git:
     repo: https://github.com/zsh-users/zsh-syntax-highlighting.git
