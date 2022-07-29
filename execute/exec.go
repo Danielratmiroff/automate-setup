@@ -28,9 +28,17 @@ func Start(username string) {
 	files, err := ioutil.ReadDir("ansible/")
 	helpers.HandleError(err, "Couldn't find 'ansible/' folder")
 
+	// Set up our system beforehand
+	updateSys := "setup-playbook.yml"
+	RunPlaybook(updateSys, sudoPass)
+
+	installPkgs := "pkgs-playbook.yml"
+	RunPlaybook(installPkgs, sudoPass)
+	//
+
 	for _, file := range files {
 		fileName := file.Name()
-		if strings.Contains(fileName, "playbook") && !file.IsDir() {
+		if strings.Contains(fileName, "playbook") && !file.IsDir() && fileName != updateSys && fileName != installPkgs {
 			RunPlaybook(fileName, sudoPass)
 		}
 	}
@@ -39,10 +47,10 @@ func Start(username string) {
 func RunPlaybook(playbook string, sudoPass string) {
 	ansibleFolder := "ansible/"
 	inventoryPath := ansibleFolder + "inventory.yml"
-	formattedFile := ansibleFolder + playbook + ".yml"
+	playbookFile := ansibleFolder + playbook
 	becomeSudo := "-e ansible_become_pass=" + sudoPass
 
-	cmd := exec.Command("ansible-playbook", "-i", inventoryPath, formattedFile, becomeSudo)
+	cmd := exec.Command("ansible-playbook", "-i", inventoryPath, playbookFile, becomeSudo)
 
 	var stdoutBuf, stderrBuf bytes.Buffer
 	cmd.Stdout = io.MultiWriter(os.Stdout, &stdoutBuf)

@@ -18,6 +18,31 @@
         path: "{{ downloads_dir }}"
         state: directory
 
+    - name: Create config folder
+      file:
+        path: "{{ config_dir }}"
+        state: directory
+
+    - name: Create fish folder
+      file:
+        path: "{{ fish_config_dir }}"
+        state: directory
+
+    - name: Create omf folder
+      file:
+        path: "{{ omf_config_dir }}"
+        state: directory
+
+    - name: Create lazygit folder
+      file:
+        path: "{{ lazygit_dir }}"
+        state: directory
+
+    - name: Create neovim folder
+      file:
+        path: "{{ neovim_config_dir }}"
+        state: directory
+
     - name: "Updating your butthole..."
       shell: |
         apt-get update

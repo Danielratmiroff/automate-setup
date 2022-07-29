@@ -7,21 +7,21 @@
     - vars/fish-vars.yml
     - vars/variables.yml
   
-  block:  
-  - name: Installing fish package
-    package:
-      name: fish
-      state: present
+  tasks:  
+    - name: Installing fish package
+      package:
+        name: fish
+        state: present
   
-  - name: Get fish installed path.
-    command: "which fish"
-    register: fish_installed_path
-    changed_when: false
+    - name: Get fish installed path.
+      command: "which fish"
+      register: fish_installed_path
+      changed_when: false
   
-  - name: Set user shell to fish.
-    shell: "chsh -s $(which fish)"
+    - name: Set user shell to fish.
+      shell: "chsh -s $(which fish)"
   
-  # tasks for Oh My Fish
-  - name: Installing oh-my-fish
-    shell: "curl jttps://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish"
-    
+    # tasks for Oh My Fish
+    - name: Installing oh-my-fish
+      shell: "curl jttps://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish"
+      

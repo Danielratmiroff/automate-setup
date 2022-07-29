@@ -7,26 +7,28 @@
     - vars/dotfiles-vars.yml
     - vars/variables.yml
   
-  block:  
-  - name: Downloading your fucking dotfiles
-    git:
-      repo: "{{ dotfiles_repo }}"
-      dest: "{{ dotfiles_dir }}"
+  tasks:  
+    - name: Downloading your fucking dotfiles
+      git:
+        repo: "{{ dotfiles_repo }}"
+        dest: "{{ dotfiles_dir }}"
   
-  - name: "Configuring dotfiles"
-    copy: 
-      src: "{{ dotfiles_dir }}/{{ item }}"
-      dest: "~/"
-    loop:
-      - ".tmux.conf"
-      - ".zshrc"
-      - ".profile"
-      - ".p10k.zsh"
+    - name: "Configuring dotfiles"
+      copy: 
+        src: "{{ dotfiles_dir }}/{{ item }}"
+        dest: "{{ home_dir }}"
+      loop:
+        - ".tmux.conf"
+        - ".zshrc"
+        - ".profile"
+        - ".p10k.zsh"
   
-  - name: "Configuring fish"
-    copy: 
-      src: "{{ dotfiles_dir }}/{{ item }}"
-      dest: "{{ fish_config_dir }}"
-    loop:
-      - "fish"
-      - "omf"
+    - name: "Configuring fish"
+      copy: 
+        src: "{{ dotfiles_dir }}/config.fish"
+        dest: "{{ fish_config_dir }}"
+     
+    - name: "Configuring oh my fish"
+      copy: 
+        src: "{{ dotfiles_dir }}/init.fish"
+        dest: "{{ omf_config_dir }}"

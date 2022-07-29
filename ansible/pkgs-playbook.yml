@@ -6,35 +6,30 @@
   vars_files: 
     - vars/variables.yml
     - vars/pkgs-vars.yml
+    - vars/golang-vars.yml
+    - vars/direnv-vars.yml
 
   # Install all PPAs
-  block:  
-  - name: "Is {{ pkgs }} in our packages?"
-    package_facts:
-      manager: auto
+  tasks:  
+    - name: "Installing {{ pkgs }} into your butthole"
+      package:
+        name: "{{ pkgs }}"
+        state: latest
+        install_recommends: yes
   
-  - name: "Installing {{ pkgs }} into your {{ butthole }}"
-    package:
-      name: "{{ pkgs }}"
-      state: latest
-      install_recommends: yes
-    when: 'pkgs not in ansible_facts.packages'
-  
-# Install golang
-- name: "Installing golang"
-  unarchive:
-    src: "{{ golang_url }}"
-    dest: /usr/local/bin
-    remote_src: yes
-
-# Install yarn
-- name: Installing yarn
-  shell: "npm install -g yarn"
-
-# Install direnv
-- name: Create direnv folder
-  block:
-    - name: Check if folder exists
+    # Install golang
+    - name: "Installing golang"
+      unarchive:
+        src: "{{ golang_url }}"
+        dest: "{{ usr_local_bin_dir }}"
+        remote_src: yes
+    
+    # Install yarn
+    - name: Installing yarn
+      shell: "npm install -g yarn"
+    
+    # Install direnv
+    - name: Check if direnv folder exists
       stat:
         path: "{{ direnv_dir }}"
       register: stat_result
@@ -45,9 +40,7 @@
         state: directory
       when: stat_result == None
 
-- name: Install direnv
-  vars_files:
-    - vars/direnv-vars.yml
-  get_url:
-    url: "{{ direnv_url }}"
-    dest: "{{ direnv_dir }}"
+    - name: Install direnv
+      get_url:
+        url: "{{ direnv_url }}"
+        dest: "{{ direnv_dir }}"

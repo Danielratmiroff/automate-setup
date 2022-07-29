@@ -7,21 +7,21 @@
     - vars/variables.yml
     - vars/neovim-vars.yml
 
-  block: 
-  - name: Installing Neo-Fucking-Vim
-    get_url:
-      url: "{{ neovim_url }}"
-      dest: "{{ downloads_dir }}"
+  tasks: 
+    - name: Installing Neo-Fucking-Vim
+      get_url:
+        url: "{{ neovim_url }}"
+        dest: "{{ downloads_dir }}"
   
-  - name: Unzip it baby  
-    unarchive:
-      src: "{{ downloads_dir }}/{{ neovim_tar }}"
-      dest: "{{ software_dir }}"
-      creates: "{{ neovim_install_dir }}"
+    - name: Unzip it baby  
+      unarchive:
+        src: "{{ downloads_dir }}/{{ neovim_tar }}"
+        dest: "{{ software_dir }}"
+        creates: "{{ neovim_install_dir }}"
   
-  # Download and set neovim configuration
-  - name: Downloading your one in a kind configuration 
-    git:
-      repo: "{{ neovim_repo }}"
-      dest: "{{ neovim_config_dir }}"
-  
+    # Download and set neovim configuration
+    - name: Downloading your one in a kind configuration 
+      git:
+        repo: "{{ neovim_repo }}"
+        dest: "{{ neovim_config_dir }}"
+    
