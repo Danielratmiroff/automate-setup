@@ -44,3 +44,12 @@
       get_url:
         url: "{{ direnv_url }}"
         dest: "{{ direnv_dir }}"
+
+    # Install exa
+    - name: Downloading exa
+      shell: "curl -Lo exa.zip {{ exa_url }}"
+
+    - name: Installing exa
+      shell: "unzip -q exa.zip bin/exa -d {{ usr_local }}"
+
+

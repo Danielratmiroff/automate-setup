@@ -17,6 +17,8 @@ pkgs:
   - "nodejs"
   - "fish"
   - "peco"
-  - "exa"
   - "tmux"
   - "rsync"
+
+exa_version: 0.10.1
+exa_url: "https://github.com/ogham/exa/releases/download/v0.10.1/exa-linux-x86_64-v{{ exa_version }}.zip"

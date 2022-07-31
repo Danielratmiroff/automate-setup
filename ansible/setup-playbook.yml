@@ -45,5 +45,5 @@
 
     - name: "Updating your butthole..."
       shell: |
-        apt-get update
-        apt-get -y upgrade
+        apt update
+        apt -y upgrade
