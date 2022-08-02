@@ -19,6 +19,8 @@ pkgs:
   - "peco"
   - "tmux"
   - "rsync"
+  - "python3.8-venv"
+  - "bat"
 
 exa_version: 0.10.1
-exa_url: "https://github.com/ogham/exa/releases/download/v0.10.1/exa-linux-x86_64-v{{ exa_version }}.zip"
+exa_url: "https://github.com/ogham/exa/releases/download/v{{ exa_version }}/exa-linux-x86_64-v{{ exa_version }}.zip"

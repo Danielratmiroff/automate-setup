@@ -3,53 +3,88 @@
 - name: Starting packages's tasks
   hosts: all
   become: true
-  vars_files: 
+  vars_files:
     - vars/variables.yml
     - vars/pkgs-vars.yml
     - vars/golang-vars.yml
     - vars/direnv-vars.yml
 
   # Install all PPAs
-  tasks:  
+  tasks:
     - name: "Installing {{ pkgs }} into your butthole"
       package:
         name: "{{ pkgs }}"
         state: latest
         install_recommends: yes
-  
+
     # Install golang
     - name: "Installing golang"
       unarchive:
         src: "{{ golang_url }}"
         dest: "{{ usr_local_bin_dir }}"
         remote_src: yes
-    
+      tags:
+        - golang
+
     # Install yarn
     - name: Installing yarn
       shell: "npm install -g yarn"
-    
+      tags:
+        - yarn
+
     # Install direnv
     - name: Check if direnv folder exists
       stat:
         path: "{{ direnv_dir }}"
       register: stat_result
+      tags:
+        - direnv
 
     - name: Create the file, if it doesnt exist already
       file:
         path: "{{ direnv_dir }}"
         state: directory
       when: stat_result == None
+      tags:
+        - direnv
 
     - name: Install direnv
       get_url:
         url: "{{ direnv_url }}"
         dest: "{{ direnv_dir }}"
+      tags:
+        - direnv
 
     # Install exa
     - name: Downloading exa
       shell: "curl -Lo exa.zip {{ exa_url }}"
+      tags:
+        - exa
 
     - name: Installing exa
       shell: "unzip -q exa.zip bin/exa -d {{ usr_local }}"
+      tags:
+        - exa
 
+    # Install batcat as cat
+    - name: Install batcat as cat
+      file:
+        src: "{{ usr_bin_dir }}/batcat"
+        dest: "{{ local_bin_dir }}/bat"
+        state: link
+      tags:
+        - bat
 
+    # TODO: Enable when I decied to use DUST
+    # Install pacstall
+    # - name: Install pacstall
+    # shell: "sudo bash -c '$(curl -fsSL https://git.io/JsADh || wget -q https://git.io/JsADh -O -)'"
+    # tags:
+    # - dust
+    # - pacstall
+
+    # Install dust
+    # - name: Install dust
+    # shell: "pacstall -I dust-bin"
+    # tags:
+    # - dust
