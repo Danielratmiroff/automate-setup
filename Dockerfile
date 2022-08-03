@@ -17,10 +17,7 @@ RUN apt-get update && apt-get install -y \
   python-is-python3 \
   python3-pip \
   openssh-client \
-  # TODO: remove this -- only for dev purposes
-  vim 
-
-RUN pip install --upgrade pip \
+  pip install --upgrade pip \
   pip install ansible
 
 COPY . ./ansible
