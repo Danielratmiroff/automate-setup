@@ -89,4 +89,4 @@ You can install individual pkgs or software by passing parameters.
 - yarn
 - golang
 
-_Any better software alternative suggestions are very much welcome_
+_Any suggestions for better alternatives are very much welcome_
