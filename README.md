@@ -88,5 +88,9 @@ You can install individual pkgs or software by passing parameters.
 - dust
 - yarn
 - golang
+- software-properties-common
+- python-is-python3
+- python3-pip
+- openssh-client
 
 _Any better software alternative suggestions are very much welcome_
