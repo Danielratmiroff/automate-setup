@@ -93,4 +93,4 @@ You can install individual pkgs or software by passing parameters.
 - python3-pip
 - openssh-client
 
-_Any better software alternative suggestions are very much welcome_
+_Any suggestions for better alternatives are very much welcomed_
